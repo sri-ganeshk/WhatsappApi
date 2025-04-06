@@ -9,7 +9,7 @@ const makeWASocket = require("@whiskeysockets/baileys").default;
 
 // Get environment variables or use defaults
 const mongoURL = 
-const PORT = 3000;
+const PORT = 3001;
 
 const { MongoClient } = require("mongodb");
 
@@ -109,16 +109,7 @@ app.get('/send', async (req, res) => {
     }
     
     // Validate phone number format
-    const formattedNumber = phoneNumber.includes('@s.whatsapp.net') 
-      ? phoneNumber 
-      : `${phoneNumber.replace(/[^0-9]/g, '')}@s.whatsapp.net`;
-    
-    if (!isConnected || !sock) {
-      return res.status(503).json({ 
-        success: false, 
-        message: "WhatsApp is not connected. Please scan the QR code displayed in the terminal." 
-      });
-    }
+   
     
     await sock.sendMessage(formattedNumber, { text: message });
     
